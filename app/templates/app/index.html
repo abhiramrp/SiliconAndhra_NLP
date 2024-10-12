@@ -1,0 +1,24 @@
+{% extends "app/layout.html" %}
+{% load static %}
+
+{% block body %}
+{{ context }}
+
+  {% if user.is_authenticated %}
+    <div>
+      You are logged in {{user}}
+
+      <a href="{% url 'logout' %}">Log out</a>
+
+    </div>
+
+  {% else %}
+
+  <div>
+    welcome to home
+  </div>
+
+  {% endif %}
+    
+
+{% endblock %}
