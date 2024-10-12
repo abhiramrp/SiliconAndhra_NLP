@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 
 from .models import *
-
+from .forms import *
 
 def index(request):
   if request.user.is_authenticated:
@@ -39,10 +39,6 @@ def register_view(request):
 
   return render(request, 'app/register.html')
 
-
-    
-
-
 def login_view(request):
   if request.method == 'POST':
     email = request.POST['email']
@@ -63,3 +59,25 @@ def login_view(request):
 def logout_view(request):
   logout(request)
   return redirect('login')
+
+
+
+def upload_document(request):
+  print("D", request.user)
+  user = User.objects.get(email=request.user.email)
+
+  print(user)
+
+  if request.method == 'POST':
+    form = DocumentForm(request.POST, request.FILES)
+    if form.is_valid():
+      doc = form.save(commit=False)
+      doc.uploader = user
+      doc.save()
+
+      return redirect('index')
+  else:
+    form = DocumentForm()
+  
+  return render(request, 'app/upload_document.html', {'form': form})
+

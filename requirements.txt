@@ -2,3 +2,6 @@ Django
 python-dotenv
 supabase
 psycopg[binary]
+whitenoise[brotli]
+gunicorn
+uvicorn
