@@ -61,10 +61,17 @@ class Document(models.Model):
   def save(self, *args, **kwargs):
     super().save(*args, **kwargs)
 
-    with open(self.file.path, 'rb') as f:
-      supabase.storage.from_("documents").upload(file=f, path="documents/")
+    print("IN SAVE")
 
-    os.remove(self.file.path)
+    with open(self.file.path, 'rb') as f:
+      print(self.file.path)
+      print(f)
+      result = supabase.storage.from_("documents").upload(file=f, path=f"{os.path.basename(self.file.path)}")
+
+    if result:
+      os.remove(self.file.path)
+    else:
+      print("File upload failed:", result)
 
 
 '''

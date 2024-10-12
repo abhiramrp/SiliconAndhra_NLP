@@ -30,6 +30,7 @@ SECRET_KEY = "django-insecure-#^d7u%xz=(7i68t-3$c0n78nq*#@64^tict7+k=gmjz&salh7i
 DEBUG = True
 
 ALLOWED_HOSTS = ['siliconandhra-nlp.onrender.com', '127.0.0.1', 'localhost']
+CSRF_TRUSTED_ORIGINS = ['https://*.siliconandhra-nlp.onrender.com','https://*.127.0.0.1', 'http://localhost:8000/']
 
 
 # Application definition
