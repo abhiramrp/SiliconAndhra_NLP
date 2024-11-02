@@ -63,11 +63,7 @@ def logout_view(request):
 
 
 def upload_document(request):
-  print("D", request.user)
   user = User.objects.get(email=request.user.email)
-
-  print(user)
-
   if request.method == 'POST':
     form = DocumentForm(request.POST, request.FILES)
     if form.is_valid():

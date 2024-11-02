@@ -1,8 +1,11 @@
 {% extends "app/layout.html" %}
 {% load static %}
 
+{% block title %}
+SiliconAndhra NLP
+{% endblock %}
+
 {% block body %}
-{{ context }}
 
   {% if user.is_authenticated %}
     <div>
