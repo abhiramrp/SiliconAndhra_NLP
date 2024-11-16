@@ -32,7 +32,7 @@ def register_view(request):
       messages.error(request, "Email already exists")
       return render(request, 'app/register.html')
 
-    user = User.objects.create_user(email=email, password=password, first_name=first_name, last_name=last_name)
+    user = User.objects.create_user(email=email, password=password, first_name=first_name, last_name=last_name, role="Participant")
     user.save()
     login(request, user)
     return redirect('index')
