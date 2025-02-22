@@ -5,3 +5,4 @@ psycopg[binary]
 whitenoise[brotli]
 gunicorn
 uvicorn
+djangorestframework

@@ -54,6 +54,7 @@ class Document(models.Model):
   title = models.CharField(max_length=50)
   file = models.FileField(upload_to='documents/')
   uploader = models.ForeignKey(User, on_delete=models.CASCADE)
+  created_at = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
     return self.title
@@ -66,7 +67,7 @@ class Document(models.Model):
     with open(self.file.path, 'rb') as f:
       print(self.file.path)
       print(f)
-      result = supabase.storage.from_("documents").upload(file=f, path=f"{os.path.basename(self.file.path)}")
+      result = supabase.storage.from_("documents").upload(file=f, path=f"documents/{os.path.basename(self.file.path)}")
 
     if result:
       os.remove(self.file.path)
@@ -75,5 +76,6 @@ class Document(models.Model):
 
 
 '''
+python3 manage.py makemigrations
 python3 manage.py migrate
 '''

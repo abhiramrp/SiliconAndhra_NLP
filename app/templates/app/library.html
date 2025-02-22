@@ -1,0 +1,31 @@
+{% extends "app/layout.html" %}
+{% load static %}
+
+{% block title %}
+Library
+{% endblock %}
+
+{% block body %}
+<h2>Library</h2>
+
+{% if library %}
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Author</th>
+  </tr>
+  {% for doc in library %}
+  <tr>
+    <td>{{ doc.title }}</td>
+    <td>{{ doc.uploader }}</td>
+    
+
+  </tr>
+
+  {% endfor %}
+
+</table>
+{% endif %}
+
+
+{% endblock %}

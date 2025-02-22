@@ -1,3 +1,7 @@
+import os
+from supabase import create_client
+from dotenv import load_dotenv
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -9,6 +13,12 @@ from django.db import IntegrityError
 
 from .models import *
 from .forms import *
+
+load_dotenv()
+
+SUPABASE_URL=os.getenv('SUPABASE_URL')
+SUPABASE_KEY=os.getenv('SUPABASE_KEY')
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def index(request):
   if request.user.is_authenticated:
@@ -60,8 +70,6 @@ def logout_view(request):
   logout(request)
   return redirect('login')
 
-
-
 def upload_document(request):
   user = User.objects.get(email=request.user.email)
   if request.method == 'POST':
@@ -76,4 +84,35 @@ def upload_document(request):
     form = DocumentForm()
   
   return render(request, 'app/upload_document.html', {'form': form})
+
+
+def library(request):
+  if request.user.is_authenticated:
+    doc_objects = Document.objects.all()
+    for d in doc_objects:
+      print(d, d.title, d.uploader)
+    
+    try:
+      response = supabase.storage.from_("documents").list()
+
+      for r in response:
+        print(r)
+
+      if 'data' in response and response['data']:
+        files = response['data']
+        # Extract file names or other relevant info
+        file_list = [file['name'] for file in files]
+        print("found files: ", file_list)
+      else:
+        print("not found files ", [])
+    except Exception as e:
+        print(f"Error fetching files: {e}")
+        print([])
+
+
+
+    return render(request, 'app/library.html', {"library": doc_objects})
+  
+  return render(request, 'app/no_access.html')
+
 

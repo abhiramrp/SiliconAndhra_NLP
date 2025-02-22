@@ -1,0 +1,13 @@
+{% extends "app/layout.html" %}
+{% load static %}
+
+{% block title %}
+No Access
+{% endblock %}
+
+{% block body %}
+<h2>No Access</h2>
+
+You do not have access to the following page. Go back to <a href="{% url 'index' %}">Dashboard</a>. 
+
+{% endblock %}

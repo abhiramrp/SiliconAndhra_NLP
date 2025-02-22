@@ -10,4 +10,5 @@ urlpatterns = [
   path("logout/", views.logout_view, name='logout'),
 
   path("upload_document/", views.upload_document, name="upload_document"),
+  path("library/", views.library, name="library")
 ]
